@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <p>Amazon shipping caculator:
+    <br>Orders under $40 = $10 shipping
+    <br>Orders over $40 = FREE shipping
+  </p>
+
+  
+    <input type="text" class="user-bill" placeholder="Nhập giá của đơn hàng!"
+    onkeydown="pressEnter(event)"
+    >
+  
+  
+  <button onclick="updateShipping()">caculate</button>
+  <p class="the-shipping">..</p>
+</body>
+
+
+
+<script>
+  function pressEnter(event) {
+    if (event.key === 'Enter') {updateShipping()}
+  }
+  function updateShipping() {
+    let userBill = Number(document.querySelector('.user-bill').value);
+    
+    let ship = document.querySelector('.the-shipping');
+    if (userBill<=40) {
+      userBill = userBill + 10;
+    }
+    ship.innerHTML = `$${userBill}`;
+  }
+</script>
+</html>

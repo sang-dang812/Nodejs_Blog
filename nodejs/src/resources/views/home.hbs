@@ -1,0 +1,15 @@
+<input type="text" placeholder="nhập vào đây" class="input-text" oninput="
+    updateText()">
+  <p>bạn nhập vào:
+    <p class="output-text">...</p>
+  </p>
+
+  <script>
+    function updateText() {
+      //console.log(event);
+    const text = document.querySelector('.input-text').value;
+    
+    const theCopy = document.querySelector('.output-text');
+    theCopy.innerHTML = text;
+    }
+  </script>

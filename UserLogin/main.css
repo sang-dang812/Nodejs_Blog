@@ -1,0 +1,14 @@
+body{
+  text-align: center;
+  font-family: Arial;
+  background-image: linear-gradient(blue, rgb(26, 236, 26));
+  background-repeat: no-repeat;
+}
+
+.account-border {
+  margin-top: 20px;
+  padding: 10px;
+  color: red;
+  background-color: white;
+
+}

@@ -1,0 +1,28 @@
+body {
+  font-family: arial;
+  background-image: linear-gradient(black,pink);
+  background-repeat: no-repeat;
+  text-align: center;
+  color: white;
+}
+
+.css-playermove {
+  height: 70px;
+  width: 50px;
+  border-style:none;
+  background-color: red;
+  border-radius: 35px;
+  cursor: pointer;
+}
+button#reset {
+  background-color: red;
+  color:black;
+  border-style: none;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 20px;
+}
+.css-result {
+  font-weight: bold;
+  color: yellow;
+}

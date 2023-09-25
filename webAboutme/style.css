@@ -1,0 +1,46 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+#header {
+  top:0;
+  left:0;
+  right:0;
+  width: 100%;
+  position: fixed;
+  background-color: black;
+  z-index: 1;
+}
+#header .nav {
+  list-style: none;
+}
+
+#header .nav-content {
+  display: inline-block;
+  float:left;
+  padding: 16px 28px;
+}
+
+#header .nav-content a {
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#header .nav-content:hover {
+  background-color: red;
+}
+
+#slider {
+  position: relative;
+  background: url('sanfran.jpeg') top center /cover no-repeat;
+  padding-top: 80%;
+}
+

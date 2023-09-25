@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+
+    <title>Quản lý thư viện</title>
+  </head>
+  <body>
+    <!-- <div class="header">Trang chủ chính thức của thư viện X
+        <br>chào mừng bạn đến với thư viện, hãy tìm hiểu những chức năng bên dưới nhé !
+    </div> -->
+    
+    <a href="https://codepen.io/uiswarup/full/RwNraeW" target="_blank">
+        <section>
+          <div class="container1">
+            <div class="background-img">
+              <div class="box">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <div class="content">
+                    <div class="container">
+                        <svg viewBox="0 0 960 300">
+                          <symbol id="s-text">
+                            <text text-anchor="middle" x="50%" y="80%">Library X</text>
+                          </symbol>
+                      
+                          <g class = "g-ants">
+                            <use xlink:href="#s-text" class="text-copy"></use>
+                            <use xlink:href="#s-text" class="text-copy"></use>
+                            <use xlink:href="#s-text" class="text-copy"></use>
+                            <use xlink:href="#s-text" class="text-copy"></use>
+                            <use xlink:href="#s-text" class="text-copy"></use>
+                          </g>
+                        </svg>
+                      </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </section>
+          </a>
+      
+
+
+    
+    <div>
+      <label for="search">Tìm sách</label>
+      <input type="text" id="search" name="search" placeholder="Tìm kiếm theo tên sách...">
+      <button class="button" onclick="searchBooks()">Tìm kiếm</button>
+    </div>
+    <div>
+      <label for="check">Kiểm tra sách:</label>
+      <input type="text" id="check" name="check" placeholder="Nhập mã sách...">
+      <button class="button" onclick="checkBook()">Kiểm tra</button>
+    </div>
+    <div>
+      <label for="borrow">Mượn sách:</label>
+      <input type="text" id="borrow" name="borrow" placeholder="Nhập mã sách...">
+      <input type="text" id="borrower" name="borrower" placeholder="Tên người mượn...">
+      <button class="button" onclick="borrowBook()">Mượn sách</button>
+      
+      <h1 id="titleOflib">
+      Danh sách sách đang có sẵn trong thư viện:
+    </h1>
+      
+      
+    </div>
+    <div id="bookList">
+      <!-- Danh sách sách sẽ được hiển thị ở đây -->
+    </div>
+    <div class="end">Trang web thuộc sở hữu của thư viện X
+        <br>rất vui vì bạn đã sử dụng nó 
+        <br> edited by Đặng Hà Sang
+    </div>
+
+
+    <form>
+    <script>
+        // Danh sách sách
+const books = [
+  {description: "Cuốn sách được tác giả Dale Carnegie ra mắt lần đầu vào năm 1937, tuy nhiên không vì thế mà nội dung của cuốn sách trở nên lỗi thời, cho đến tận bây giờ, những bài học và triết lý trong sách vẫn còn được áp dụng rất nhiều trong cuộc sống ngày nay, đơn giản vì nó được tác giả đúc kết qua những nghiên cứu và khám phá về ngành tâm lý học của con người. ", id: 2020, title: "Đắc nhân tâm", author: "Dale Carnegie", available: true, borrower: "" },
+  {description: "“Sức mạnh của ngôn từ” cho bạn biết rằng, có những câu nói có thể quyết định thành bại trong công việc, có thể gắn kết hay phá vỡ mối mối quan hệ của bạn với những người xung quanh. Bạn có từng cảm thấy nội tâm đột nhiên cảm thấy yên bình và thanh thản khi đọc những câu văn của các vị thiền sư? Hay cảm thấy khích lệ bởi một bài diễn thuyết từ một vị chuyên gia? Hoặc từng bị tổn thương bởi những lời nói vô tình hay cố ý từ người khác? Đó chính là sức ảnh hưởng của việc dùng ngôn ngữ biểu đạt.", id: 1111, title: "Sức mạnh của ngôn từ", author: "Shad Helmstetter", available: true, borrower: "" },
+  {description: "“Nhà giả kim” không khiến bạn ngay từ giây phút đầu đọc cuốn sách đã ngay lập tức nhận ra ánh sáng chân lý của cuộc đời mình, mà qua từng trang sách, từng bài học ẩn dụ, nó mang lại cho người đọc một cách nhìn sâu sắc hơn về những điều xảy ra trong cuộc sống. Dành cho những ai đang cảm thấy hoang mang vô định, cho những ai đang đánh mất niềm tin vào bản thân và tình yêu, Nhà giả kim hy vọng sẽ tiếp thêm lửa cho trái tim nhiệt huyết của bạn, để bạn có thể tự tin vượt qua những thử thách và chạm đến thành công.", id: 3303, title: "Nhà giả kim", author: "Paulo Coelho", available: false, borrower: "Nguyễn Văn A" },
+  {description: "Với một giọng văn tỉnh táo và dung dị, Higashino Keigo đã đem đến cho độc giả hơn cả một cuốn tiểu thuyết trinh thám. Mô tả tội ác không phải điều hấp dẫn nhất ở đây, mà còn là những giằng xé nội tâm thầm kín, những nhân vật bình dị, và sự quan tâm sâu sa tới con người.", id: 4211, title: "Phía sau nghi can X", author: "Higasino Keigo", available: true, borrower: "" },
+  {description: "Được xem là một trong những sự kiện văn chương được chờ đợi nhất, Hannibal và những ngày run rẩy bắt đầu mang người đọc vào cung điện ký ức của một kẻ ăn thịt người, tạo dựng nên một bức chân dung ớn lạnh của tội ác đang âm thầm sinh sôi – một thành công của thể loại kinh dị tâm lý. Trên đời này chuyện gì cũng có thể xảy ra.. Trên đời này chuyện gì cũng có thể xảy ra.", id: 5987, title: "Hannibal", author: "Thomas Harris", available: true, borrower: "" },
+];
+
+// Hiển thị danh sách sách
+function showBooks(books) {
+  const bookList = document.getElementById("bookList");
+  bookList.innerHTML = "";
+
+  for (let book of books) {
+    const listItem = document.createElement("li");
+    const title = document.createElement("h3");
+    const author = document.createElement("p");
+    const availability = document.createElement("p");
+    const borrower = document.createElement("p");
+    const id = document.createElement("p");
+    const description = document.createElement("p");
+
+    id.innerText = `id: ${book.id}`;
+    title.innerText = book.title;
+    author.innerText = `Tác giả: ${book.author}`;
+    availability.innerText = book.available ? "Sẵn có" : "Đã mượn";
+    borrower.innerText = book.borrower ? `Người mượn: ${book.borrower}` : "";
+    description.innerText = book.description;
+
+    listItem.appendChild(title);
+    listItem.appendChild(author);
+    listItem.appendChild(availability);
+    listItem.appendChild(borrower);
+    listItem.appendChild(id);
+    listItem.appendChild(description);
+    bookList.appendChild(listItem);
+
+    title.style
+    // title.style.color = "linear-gradient(135deg, #f2d50f, #f19c1d, #ef6c34, #d9254d, #8e1a6a, #3f4075, #1d6ab2, #159fbd, #28cfb0, #7bdca4, #b1e87b, #f2d50f)";
+    title.style.animation = "fadein 5s forwards";
+    title.style.fontFamily = "Arial, san-serif";
+    title.style.fontSize = "30px";
+    title.style.color = "aqua";
+
+    listItem.style.animation = "slidein 1s forwards"
+    listItem.style.border = "3px solid white";
+    listItem.style.margin = "50px";
+    listItem.style.color = "white";
+    }
+}
+
+
+
+        // Tìm kiếm sách
+function searchBooks() {
+    const searchTerm = document.getElementById("search").value.toLowerCase();
+  
+    const searchResults = books.filter(
+      (book) =>
+        book.title.toLowerCase().includes(searchTerm) ||
+        book.author.toLowerCase().includes(searchTerm)
+    );
+  
+    showBooks(searchResults);
+  }
+  
+  // Kiểm tra sách
+  function checkBook() {
+    const bookId = parseInt(document.getElementById("check").value);
+  
+    const book = books.find((book) => book.id === bookId);
+  
+    if (book) {
+      const message = book.available
+        ? "Sách này đang sẵn có."
+        : `Sách này đã được mượn bởi ${book.borrower}.`;
+  
+      alert(message);
+    } else {
+      alert("Không tìm thấy sách.");
+    }
+  }
+  
+  // Mượn sách
+  function borrowBook() {
+    const bookId = parseInt(document.getElementById("borrow").value);
+    const borrowerName = document.getElementById("borrower").value;
+  
+    const book = books.find((book) => book.id === bookId);
+  
+    if (book && book.available) {
+      book.available = false;
+      book.borrower = borrowerName;
+      alert(`Bạn đã mượn sách ${book.title}.`);
+    } else {
+      alert("Không thể mượn sách này.");
+    }
+  
+    showBooks(books);
+  }
+  
+  // Hiển thị danh sách sách khi trang được tải lần đầu
+  showBooks(books);
+  
+    </script>
+</form>
+
+  </body>
+</html>

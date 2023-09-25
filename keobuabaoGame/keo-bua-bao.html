@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="keo-bua-bao.css">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Trò chơi kéo búa bao!!!</h1>
+  <p>bắt đầu</p>
+  <button onclick="playGame('keo')"><img src="keo-image.jpeg" alt="" class="css-playermove"></button>
+  <button onclick="playGame('bua')"><img src="bua-image.jpeg" alt="" class="css-playermove"></button>
+  <button onclick="playGame('bao')"><img src="bao-image.jpeg" alt="" class="css-playermove"></button>
+  <button id="reset" onclick="resetAll()">reset game</button>
+  <div>
+    <p class="showcase css-result"></p>
+  </div>
+  <div>
+    <p class="the-result css-result">kết quả lượt chơi này:</p>
+  </div>
+  <div>
+    <p class="history-play css-result">lịch sử chơi:</p>
+  </div>
+</body>
+
+
+<!-- JS code -->
+<script>
+  let score = JSON.parse(localStorage.getItem('scoreSave'))||{
+      thang : 0,
+      thua : 0,
+      hoa : 0
+    };
+  function resetAll() {
+    score.thang = 0;
+    score.thua = 0;
+    score.hoa = 0;
+    localStorage.removeItem('scoreSave');
+    const showcase = document.querySelector('.showcase');
+    showcase.innerHTML = `Reset thanh cong!!!`;
+    const updateResult = document.querySelector('.the-result');
+    updateResult.innerHTML = `Moi ban tiep tuc choi!!!`;
+    const historyPlay = document.querySelector('.history-play');
+    historyPlay.innerHTML = `Lich su choi: </br>
+    thang: ${score.thang} </br>
+    thua: ${score.thua} </br>
+    hoa: ${score.hoa}
+    `
+  }
+  function playGame(playerMove){
+    const randomNumber = Math.random();
+    let computerMove;
+    let result;
+    
+    if (randomNumber>0 && randomNumber<=1/3) {
+      computerMove = 'keo';
+    }
+    else if (randomNumber>1/3 && randomNumber<=2/3) {
+      computerMove = 'bua';
+    }
+    else {
+      computerMove = 'bao';
+    }
+
+    if (playerMove === 'keo') {
+      if (computerMove === 'keo') {result = 'hoa'; score.hoa++}
+      else if (computerMove === 'bua') {result = 'thua'; score.thua++}
+      else {result = 'thang'; score.thang++}
+    }
+    if (playerMove === 'bua') {
+      if (computerMove === 'keo') {result = 'thang'; score.thang++;}
+      else if (computerMove === 'bua') {result = 'hoa'; score.hoa++;}
+      else {result = 'thua'; score.thua++;}
+    }
+    if (playerMove === 'bao') {
+      if (computerMove === 'keo') {result = 'thua'; score.thua++;}
+      else if (computerMove === 'bua') {result = 'thang'; score.thang++;}
+      else {result = 'hoa'; score.hoa++;}
+    }
+    const showcase = document.querySelector('.showcase');
+    showcase.innerHTML = `ban chon ${playerMove}, may chon ${computerMove}`;
+    const updateResult = document.querySelector('.the-result');
+    updateResult.innerHTML = `Ket qua luot choi nay: ${result}`;
+    const historyPlay = document.querySelector('.history-play');
+    historyPlay.innerHTML = `Lich su choi: </br>
+    thang: ${score.thang} </br>
+    thua: ${score.thua} </br>
+    hoa: ${score.hoa}
+    `
+
+    localStorage.setItem('scoreSave',JSON.stringify(score));
+  }
+</script>
+</html>
